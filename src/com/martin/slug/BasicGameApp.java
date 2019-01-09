@@ -17,7 +17,7 @@ public class BasicGameApp extends GameApplication {
     protected void initSettings(GameSettings settings) {
         settings.setWidth(800);
         settings.setHeight(600);
-        settings.setTitle("Martin Slug");
+        settings.setTitle("Cosby Hunter");
         settings.setVersion("0.1");
     }
 
@@ -26,8 +26,13 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initGame(){
         player = Entities.builder()
-                .at(300,300)
+                .at(100,200)
                 .viewFromTexture("gamesprite.png")
+                .buildAndAttach(getGameWorld());
+
+        player = Entities.builder()
+                .at(700, 300)
+                .viewFromTexture("cosbyboss.png")
                 .buildAndAttach(getGameWorld());
     }
 
