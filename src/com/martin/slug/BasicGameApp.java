@@ -73,8 +73,8 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initUI() {
         Text textPixels = new Text();
-        textPixels.setTranslateX(50); // x = 50
-        textPixels.setTranslateY(100); // y = 100
+        textPixels.setTranslateX(25); // x = 50
+        textPixels.setTranslateY(25); // y = 100
 
         textPixels.textProperty().bind(getGameState().intProperty("pixelsMoved").asString());
 
