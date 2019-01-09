@@ -27,7 +27,7 @@ public class BasicGameApp extends GameApplication {
     protected void initGame(){
         player = Entities.builder()
                 .at(300,300)
-                .viewFromNode(new Rectangle(25,25,Color.RED))
+                .viewFromTexture("gamesprite.png")
                 .buildAndAttach(getGameWorld());
     }
 
