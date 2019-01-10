@@ -22,6 +22,9 @@ public class BasicGameApp extends GameApplication {
     }
 
     private Entity player;
+    private Entity enemy;
+    private Entity bullet;
+
 
     @Override
     protected void initGame(){
@@ -30,8 +33,8 @@ public class BasicGameApp extends GameApplication {
                 .viewFromTexture("gamesprite.png")
                 .buildAndAttach(getGameWorld());
 
-        player = Entities.builder()
-                .at(700, 300)
+        enemy = Entities.builder()
+                .at(500, 200)
                 .viewFromTexture("cosbyboss.png")
                 .buildAndAttach(getGameWorld());
     }
@@ -72,6 +75,13 @@ public class BasicGameApp extends GameApplication {
                 getGameState().increment("pixelsMoved", +5);
             }
         }, KeyCode.S);
+
+        // input.addAction(new UserAction("Shoot") {
+        //    @Override
+        //    protected void onAction() {
+        //        player.translate();
+        //    }
+        // }, KeyCode.SPACE);
 
     }
 
