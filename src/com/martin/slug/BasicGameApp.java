@@ -3,6 +3,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.InputMapping;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 import javafx.scene.input.KeyCode;
@@ -21,9 +22,15 @@ public class BasicGameApp extends GameApplication {
         settings.setVersion("0.1");
     }
 
+    public enum EntityType {
+        BULLET, ENEMY
+    }
+
+
     private Entity player;
+    private PlayerControl playerControl;
     private Entity enemy;
-    private Entity bullet;
+
 
 
     @Override
@@ -42,6 +49,8 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initInput(){
         Input input = getInput();
+
+        input.addInputMapping(new InputMapping("Shoot", KeyCode.SPACE));
 
         input.addAction(new UserAction("Move Right") {
             @Override
