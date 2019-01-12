@@ -40,6 +40,7 @@ public class BasicGameApp extends GameApplication {
 
         initTreasure();
         initPlayer();
+        spawnEnemy();
 
     }
 
