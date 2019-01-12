@@ -2,10 +2,12 @@ package com.martin.slug;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.input.Input;
-import com.almasb.fxgl.input.InputMapping;
-import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.entity.view.EntityView;
+import com.almasb.fxgl.input.*;
+import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.settings.GameSettings;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +22,8 @@ public class BasicGameApp extends GameApplication {
         settings.setHeight(600);
         settings.setTitle("Cosby Hunter");
         settings.setVersion("0.1");
+        settings.setMenuEnabled(true);
+        settings.setMenuKey(KeyCode.ESCAPE);
     }
 
     public enum EntityType {
@@ -29,21 +33,40 @@ public class BasicGameApp extends GameApplication {
 
     private Entity player;
     private PlayerControl playerControl;
-    private Entity enemy;
-
 
 
     @Override
     protected void initGame(){
-        player = Entities.builder()
-                .at(100,200)
-                .viewFromTexture("gamesprite.png")
-                .buildAndAttach(getGameWorld());
 
-        enemy = Entities.builder()
-                .at(500, 200)
-                .viewFromTexture("cosbyboss.png")
-                .buildAndAttach(getGameWorld());
+        initTreasure();
+        initPlayer();
+
+    }
+
+    private void initTreasure() {
+        Entity treasure = new Entity();
+        treasure.getPositionComponent().setValue(getWidth() / 2, getHeight() / 2);
+        treasure.getViewComponent().setView(new Rectangle(40, 40, Color.YELLOW));
+
+        getGameWorld().addEntity(treasure);
+    }
+
+    private void initPlayer() {
+        player = new Entity();
+        player.getPositionComponent().setValue(getWidth() / 20, getHeight() / 20);
+        player.setViewFromTexture("gamesprite.png");
+
+        WeaponComponent weapon = new WeaponComponent();
+        weapon.setDamage(2);
+        weapon.setFireRate(1.0);
+        weapon.setMaxAmmo(10);
+
+        player.addComponent(weapon);
+
+        playerControl = new PlayerControl();
+        player.addComponent(playerControl);
+
+        getGameWorld().addEntity(player);
     }
 
     @Override
@@ -93,6 +116,50 @@ public class BasicGameApp extends GameApplication {
         // }, KeyCode.SPACE);
 
     }
+
+    @Override
+    protected void initPhysics() {
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BULLET, EntityType.ENEMY) {
+            @Override
+            protected void onCollisionBegin(Entity bullet, Entity enemy) {
+                BulletComponent bulletData = bullet.getComponent(BulletComponent.class);
+
+                bulletData.setHp(bulletData.getHp() - 1);
+
+                HPComponent hp = enemy.getComponent(HPComponent.class);
+                hp.decrement(bulletData.getDamage() + player.getComponent(WeaponComponent.class).getDamage());
+                if (hp.getValue() <= 0)
+                    enemy.removeFromWorld();
+
+                if (bulletData.getHp() <= 0)
+                    bullet.removeFromWorld();
+            }
+        });
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+
+    }
+
+    @OnUserAction(name = "Shoot", type = ActionType.ON_ACTION_BEGIN)
+    public void shoot() {
+        playerControl.shoot(getInput().getVectorToMouse(player.getPositionComponent().getValue()));
+    }
+
+    private void spawnEnemy() {
+        Entity enemy = new Entity();
+        enemy.getTypeComponent().setValue(EntityType.ENEMY);
+        enemy.getPositionComponent().setValue(500,200);
+        enemy.getViewComponent().setTexture("cosbyboss.png", true);
+
+        enemy.addComponent(new CollidableComponent(true));
+        enemy.addComponent(new HPComponent(5));
+        enemy.addComponent(new EnemyControl(new Point2D(getWidth() / 2, getHeight() / 2)));
+
+        getGameWorld().addEntity(enemy);
+    }
+
 
     @Override
     protected void initUI() {
