@@ -166,6 +166,7 @@ public class BasicGameApp extends GameApplication {
         Text textPixels = new Text();
         textPixels.setTranslateX(25); // x = 50
         textPixels.setTranslateY(25); // y = 100
+        getGameScene().setBackgroundRepeat("background.png");
 
         textPixels.textProperty().bind(getGameState().intProperty("pixelsMoved").asString());
 
