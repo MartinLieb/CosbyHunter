@@ -74,7 +74,8 @@ public class BasicGameApp extends GameApplication {
     protected void initInput(){
         Input input = getInput();
 
-        input.addInputMapping(new InputMapping("Shoot", KeyCode.SPACE));
+        input.addInputMapping(new InputMapping("Shoot", KeyCode.F));
+
 
         input.addAction(new UserAction("Move Right") {
             @Override

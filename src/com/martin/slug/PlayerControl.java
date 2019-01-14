@@ -7,9 +7,12 @@ import com.almasb.fxgl.entity.components.PositionComponent;
 import com.almasb.fxgl.entity.view.EntityView;
 import com.almasb.fxgl.extra.entity.components.OffscreenCleanComponent;
 import com.almasb.fxgl.extra.entity.components.ProjectileComponent;
+import com.martin.slug.BasicGameApp;
+import com.martin.slug.BulletComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 
 public class PlayerControl extends Component {
     @Override
