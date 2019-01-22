@@ -77,6 +77,18 @@ public class BasicGameApp extends GameApplication {
         input.addInputMapping(new InputMapping("Shoot", KeyCode.F));
 
 
+        // Se Martin, her tilføjer vi en action handler til SPACE
+        input.addAction(new UserAction("Shoot Space") {
+            @Override
+            protected void onAction(){
+                // Jeg laver en random Point2D variable, fordi den er nødvendig for skudretning (du må finde ud af, hvilket point du vil sigte efter)
+                Point2D p = player.getCenter();
+                // Så kalder jeg din shoot metode
+                playerControl.shoot(p);
+            }
+
+        }, KeyCode.SPACE);
+
         input.addAction(new UserAction("Move Right") {
             @Override
             protected void onAction(){
