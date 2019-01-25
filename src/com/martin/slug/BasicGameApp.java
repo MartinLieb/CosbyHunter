@@ -31,28 +31,27 @@ public class BasicGameApp extends GameApplication {
     }
 
 
-    private Entity player;
-    private PlayerControl playerControl;
+    public Entity player;
+    public PlayerControl playerControl;
 
 
     @Override
     protected void initGame(){
 
-        initTreasure();
+    //    initTreasure();
         initPlayer();
         spawnEnemy();
 
     }
 
-    private void initTreasure() {
-        Entity treasure = new Entity();
-        treasure.getPositionComponent().setValue(getWidth() / 2, getHeight() / 2);
-        treasure.getViewComponent().setView(new Rectangle(40, 40, Color.YELLOW));
+    // private void initTreasure() {
+    //    Entity treasure = new Entity();
+    //    treasure.getPositionComponent().setValue(getWidth() / 2, getHeight() / 2);
+    //    treasure.getViewComponent().setView(new Rectangle(40, 40, Color.YELLOW));
+    //    getGameWorld().addEntity(treasure);
+    //}
 
-        getGameWorld().addEntity(treasure);
-    }
-
-    private void initPlayer() {
+    public void initPlayer() {
         player = new Entity();
         player.getPositionComponent().setValue(getWidth() / 20, getHeight() / 20);
         player.setViewFromTexture("gamesprite.png");
@@ -74,8 +73,6 @@ public class BasicGameApp extends GameApplication {
     protected void initInput(){
         Input input = getInput();
 
-        input.addInputMapping(new InputMapping("Shoot", KeyCode.F));
-
 
         input.addAction(new UserAction("Move Right") {
             @Override
@@ -85,6 +82,19 @@ public class BasicGameApp extends GameApplication {
             }
 
         }, KeyCode.D);
+
+        // Se Martin, her tilføjer vi en action handler til SPACE
+        input.addAction(new UserAction("Shoot Space") {
+            @Override
+            protected void onAction(){
+                // Jeg laver en random Point2D variable, fordi den er nødvendig for skudretning (du må finde ud af, hvilket point du vil sigte efter)
+                Point2D p = player.getCenter();
+                // Så kalder jeg din shoot metode
+                playerControl.shoot(p);
+            }
+
+        }, KeyCode.SPACE);
+
 
         input.addAction(new UserAction("Move Left") {
             @Override

@@ -12,7 +12,7 @@ import com.martin.slug.BulletComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+import com.martin.slug.BasicGameApp;
 
 public class PlayerControl extends Component {
     @Override
