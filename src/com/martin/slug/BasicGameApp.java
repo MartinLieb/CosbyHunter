@@ -1,5 +1,6 @@
 package com.martin.slug;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -12,7 +13,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
+
 import java.util.Map;
+
+import static com.almasb.fxgl.app.DSLKt.run;
 
 public class BasicGameApp extends GameApplication {
 
@@ -40,7 +45,7 @@ public class BasicGameApp extends GameApplication {
 
     //    initTreasure();
         initPlayer();
-        spawnEnemy();
+        run(() -> spawnEnemy(), Duration.seconds(1));
 
     }
 
@@ -53,7 +58,7 @@ public class BasicGameApp extends GameApplication {
 
     public void initPlayer() {
         player = new Entity();
-        player.getPositionComponent().setValue(getWidth() / 20, getHeight() / 20);
+        player.getPositionComponent().setValue(getWidth() / 20, getHeight() / 3);
         player.setViewFromTexture("gamesprite.png");
 
         WeaponComponent weapon = new WeaponComponent();
@@ -83,13 +88,10 @@ public class BasicGameApp extends GameApplication {
 
         }, KeyCode.D);
 
-        // Se Martin, her tilføjer vi en action handler til SPACE
         input.addAction(new UserAction("Shoot Space") {
             @Override
             protected void onAction(){
-                // Jeg laver en random Point2D variable, fordi den er nødvendig for skudretning (du må finde ud af, hvilket point du vil sigte efter)
-                Point2D p = player.getCenter();
-                // Så kalder jeg din shoot metode
+                Point2D p = getInput().getMousePositionWorld();
                 playerControl.shoot(p);
             }
 
@@ -162,7 +164,7 @@ public class BasicGameApp extends GameApplication {
     private void spawnEnemy() {
         Entity enemy = new Entity();
         enemy.getTypeComponent().setValue(EntityType.ENEMY);
-        enemy.getPositionComponent().setValue(500,200);
+        enemy.getPositionComponent().setValue(500,FXGLMath.random());
         enemy.getViewComponent().setTexture("cosbyboss.png", true);
 
         enemy.addComponent(new CollidableComponent(true));

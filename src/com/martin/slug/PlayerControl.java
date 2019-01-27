@@ -28,7 +28,7 @@ public class PlayerControl extends Component {
 
         bullet.addComponent(new CollidableComponent(true));
         bullet.addComponent(new OffscreenCleanComponent());
-        bullet.addComponent(new ProjectileComponent(direction, 10 * 60));
+        bullet.addComponent(new ProjectileComponent(direction, 10 * 160));
 
         BulletComponent bulletData = new BulletComponent();
         bulletData.setDamage(1);
