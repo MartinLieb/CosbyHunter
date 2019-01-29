@@ -153,6 +153,7 @@ public class BasicGameApp extends GameApplication {
                 hp.decrement(bulletData.getDamage() + player.getComponent(WeaponComponent.class).getDamage());
                 if (hp.getValue() <= 0)
                     enemy.removeFromWorld();
+                getGameState().increment("score", +1);
 
                 if (bulletData.getHp() <= 0)
                     bullet.removeFromWorld();
@@ -190,10 +191,16 @@ public class BasicGameApp extends GameApplication {
         textPixels.setTranslateX(25); // x = 50
         textPixels.setTranslateY(25); // y = 100
         getGameScene().setBackgroundRepeat("background.png");
+        Text textScore = getUIFactory().newText("", Color.BLACK, 22);
+
+        textScore.setTranslateX(10);
+        textScore.setTranslateY(50);
+
+        textScore.textProperty().bind(getGameState().intProperty("score").asString());
 
         textPixels.textProperty().bind(getGameState().intProperty("pixelsMoved").asString());
 
-        getGameScene().addUINode(textPixels); // add to the scene graph
+        getGameScene().addUINode(textScore); // add to the scene graph
     }
 
 
