@@ -150,7 +150,10 @@ public class BasicGameApp extends GameApplication {
                 hp.decrement(bulletData.getDamage() + player.getComponent(WeaponComponent.class).getDamage());
                 if (hp.getValue() <= 0)
                     enemy.removeFromWorld();
+                getAudioPlayer().playMusic("oof.wav");
                 getGameState().increment("score", +1);
+
+
 
                 if (bulletData.getHp() <= 0)
                     bullet.removeFromWorld();
@@ -160,6 +163,8 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf) {
+        getGameWorld().getEntitiesByType(EntityType.ENEMY).forEach(enemy -> enemy.translateX(-100 * tpf));
+
 
     }
 
