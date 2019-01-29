@@ -150,8 +150,8 @@ public class BasicGameApp extends GameApplication {
                 hp.decrement(bulletData.getDamage() + player.getComponent(WeaponComponent.class).getDamage());
                 if (hp.getValue() <= 0)
                     enemy.removeFromWorld();
-                getAudioPlayer().playMusic("oof.wav");
-                getGameState().increment("score", +1);
+                    getAudioPlayer().playSound("oof.wav");
+                    getGameState().increment("score", +1);
 
 
 
