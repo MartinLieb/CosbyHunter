@@ -45,8 +45,17 @@ public class BasicGameApp extends GameApplication {
 
     //    initTreasure();
         initPlayer();
-        run(() -> spawnEnemy(), Duration.seconds(1));
+        run(() -> spawnEnemy(), Duration.seconds(2));
 
+    }
+
+    @Override
+    protected void initGameVars(Map<String, Object> vars) {
+        vars.put("pixelsMoved", 0);
+        vars.put("score", 0);
+        vars.put("level", 0);
+        vars.put("lives", 1);
+        vars.put("enemiesKilled", 0);
     }
 
     // private void initTreasure() {
@@ -186,12 +195,6 @@ public class BasicGameApp extends GameApplication {
 
         getGameScene().addUINode(textPixels); // add to the scene graph
     }
-
-    @Override
-    protected void initGameVars(Map<String, Object> vars) {
-        vars.put("pixelsMoved", 0);
-    }
-
 
 
     public static void main(String[] args) {
