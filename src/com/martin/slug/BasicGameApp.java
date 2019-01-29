@@ -134,12 +134,6 @@ public class BasicGameApp extends GameApplication {
             }
         }, KeyCode.S);
 
-        // input.addAction(new UserAction("Shoot") {
-        //    @Override
-        //    protected void onAction() {
-        //        player.translate();
-        //    }
-        // }, KeyCode.SPACE);
 
     }
 
