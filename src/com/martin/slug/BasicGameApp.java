@@ -176,7 +176,7 @@ public class BasicGameApp extends GameApplication {
     private void spawnEnemy() {
         Entity enemy = new Entity();
         enemy.getTypeComponent().setValue(EntityType.ENEMY);
-        enemy.getPositionComponent().setValue(500,FXGLMath.random());
+        enemy.getPositionComponent().setValue(550,FXGLMath.random(25,450));
         enemy.getViewComponent().setTexture("cosbyboss.png", true);
 
         enemy.addComponent(new CollidableComponent(true));
