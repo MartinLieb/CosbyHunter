@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 import java.util.Map;
 
+import static com.almasb.fxgl.app.DSLKt.loopBGM;
 import static com.almasb.fxgl.app.DSLKt.run;
 
 public class BasicGameApp extends GameApplication {
@@ -46,6 +47,8 @@ public class BasicGameApp extends GameApplication {
     //    initTreasure();
         initPlayer();
         run(() -> spawnEnemy(), Duration.seconds(2));
+
+        loopBGM("fortunateson.wav");
 
     }
 
